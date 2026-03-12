@@ -34,6 +34,7 @@ export interface IScannerProps {
 	allowMultiple?: boolean;
 	scanDelay?: number;
 	sound?: boolean | string;
+	onCamera?: ((camera: ReturnType<typeof useCamera>) => void);
 }
 
 function clearCanvas(canvas: HTMLCanvasElement | null) {
@@ -159,6 +160,7 @@ export function Scanner(props: IScannerProps) {
 		scanDelay,
 		onError,
 		sound,
+		onCamera,
 	} = props;
 
 	const videoRef = useRef<HTMLVideoElement>(null);
@@ -186,6 +188,7 @@ export function Scanner(props: IScannerProps) {
 
 	useEffect(() => {
 		cameraRef.current = camera;
+		onCamera?.(camera);
 	}, [camera]);
 
 	useEffect(() => {
